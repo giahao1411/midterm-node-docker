@@ -2,7 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require("path");
+const methodOverride = require("method-override");
 
 // modules exported
 const CourseRouter = require("./routes/CourseRoute");
@@ -25,6 +25,7 @@ app.use(express.static("public"));
 // middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(methodOverride("_method")); // allow another method via a hidden input field
 
 // use modules
 app.use("/course", CourseRouter);
