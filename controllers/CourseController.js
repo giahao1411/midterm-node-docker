@@ -1,8 +1,8 @@
 const Course = require("../models/CourseModel");
-const generateId = require("../utils/mongooseUtil");
+const utils = require("../utils/mongooseUtil");
 const slugify = require("slugify");
-const validator = require('validator');
-require('dotenv').config();
+const validator = require("validator");
+require("dotenv").config();
 
 // local variable
 let courses = [];
@@ -69,11 +69,12 @@ const getAllCourses = async (req, res) => {
 // create course
 const createCourse = async (req, res) => {
     try {
-        const { name, description, videoId, level } = req.body;
+        const { name, description, videoLink, level } = req.body;
 
         // generate YouTube thumbnail URL for the course image
-        const image = `https://img.youtube.com/vi/${req.body.videoId}/0.jpg`;
-        const newId = await generateId();
+        const videoId = utils.extractVideoId(videoLink);
+        const image = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+        const newId = await utils.generateId();
 
         // generate a unique slug based on the course name
         const slug = slugify(name, { lower: true, strict: true });
@@ -99,7 +100,9 @@ const createCourse = async (req, res) => {
 // edit selected course
 const editCourse = async (req, res) => {
     try {
-        const { name, description, videoId, level } = req.body;
+        const { name, description, videoLink, level } = req.body;
+
+        const videoId = utils.extractVideoId(videoLink);
 
         const updateCourse = await Course.findByIdAndUpdate(
             req.params.id,
@@ -129,14 +132,14 @@ const renderLoginPage = (req, res) => {
     return res.render("login", {
         errorMessage: null,
         email: "",
-        password: ""
+        password: "",
     });
 };
 
 // handling login information
 const loginCourse = (req, res) => {
     let { inputEmail, inputPassword } = req.body;
-    let error = '';
+    let error = "";
 
     const storedEmail = process.env.ADMIN_EMAIL;
     const storedPassword = process.env.ADMIN_PASSWORD;
@@ -159,7 +162,7 @@ const loginCourse = (req, res) => {
         res.render("login", {
             errorMessage: error,
             email: inputEmail,
-            password: inputPassword
+            password: inputPassword,
         });
     } else {
         req.session.user = inputEmail;

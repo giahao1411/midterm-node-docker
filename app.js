@@ -17,12 +17,14 @@ db.connect();
 const app = express();
 
 // express-session
-app.use(session({
-    secret: 'keyboard cat', 
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } 
-}));
+app.use(
+    session({
+        secret: "keyboard cat",
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false },
+    })
+);
 
 // views engine
 app.set("view engine", "ejs");
@@ -34,7 +36,7 @@ app.use(express.static("public"));
 // middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(methodOverride("_method")); // allow another method via a hidden input field
+app.use(methodOverride("_method")); // allow another method via a query field
 
 // use modules
 app.use("/", CourseRouter);
