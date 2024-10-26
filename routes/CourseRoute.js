@@ -1,19 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const CourseController = require("../controllers/CourseController");
+const requireLogin = require("../middlewares/requireLogin");
 
 // course home route
-router.get("/", CourseController.getAllCourses);
+router.get("/",requireLogin, CourseController.getAllCourses);
 
 // create route
-router.get("/create", CourseController.renderCreatePage);
-router.post("/create", CourseController.createCourse);
+router.get("/create",requireLogin, CourseController.renderCreatePage);
+router.post("/create",requireLogin, CourseController.createCourse);
 
 // edit route
-router.get("/edit/:id", CourseController.renderEditPage);
-router.patch("/edit/:id", CourseController.editCourse);
+router.get("/edit/:id",requireLogin, CourseController.renderEditPage);
+router.patch("/edit/:id",requireLogin, CourseController.editCourse);
 
 // login route
-// app.get('/login', CourseController.loginPage);
+router.get("/login", CourseController.renderLoginPage);
+router.post("/login", CourseController.loginCourse);
 
 module.exports = router;

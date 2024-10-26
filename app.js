@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
+const session = require("express-session");
 
 // modules exported
 const CourseRouter = require("./routes/CourseRoute");
@@ -14,6 +15,14 @@ db.connect();
 
 // initializes
 const app = express();
+
+// express-session
+app.use(session({
+    secret: 'keyboard cat', 
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } 
+}));
 
 // views engine
 app.set("view engine", "ejs");
@@ -28,6 +37,7 @@ app.use(bodyParser.json());
 app.use(methodOverride("_method")); // allow another method via a hidden input field
 
 // use modules
+app.use("/", CourseRouter);
 app.use("/course", CourseRouter);
 app.use("/me", MeRouter);
 
