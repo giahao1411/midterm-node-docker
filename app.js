@@ -8,7 +8,11 @@ const session = require("express-session");
 // modules exported
 const CourseRouter = require("./routes/CourseRoute");
 const MeRouter = require("./routes/MeRoute");
+const LoginRouter = require("./routes/LoginRoute");
 const db = require("./config/database");
+
+// middleware 
+const requireLogin = require("./middlewares/requireLogin");
 
 // database connection
 db.connect();
@@ -39,9 +43,10 @@ app.use(bodyParser.json());
 app.use(methodOverride("_method")); // allow another method via a query field
 
 // use modules
-app.use("/", CourseRouter);
-app.use("/course", CourseRouter);
-app.use("/me", MeRouter);
+app.use("/login", LoginRouter);
+app.use("/", requireLogin, CourseRouter);
+app.use("/course", requireLogin, CourseRouter);
+app.use("/me", requireLogin, MeRouter);
 
 // Start server
 const PORT = process.env.PORT || 3000;
