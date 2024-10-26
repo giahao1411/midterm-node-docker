@@ -123,6 +123,14 @@ const editCourse = async (req, res) => {
     }
 };
 
+// login course
+// const loginPage = (req, res) => {
+//     res.render('login')
+// }
+
+// handle requested login information
+
+
 module.exports = {
     renderCreatePage,
     renderEditPage,

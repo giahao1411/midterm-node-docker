@@ -13,4 +13,7 @@ router.post("/create", CourseController.createCourse);
 router.get("/edit/:id", CourseController.renderEditPage);
 router.patch("/edit/:id", CourseController.editCourse);
 
+// login route
+// app.get('/login', CourseController.loginPage);
+
 module.exports = router;
