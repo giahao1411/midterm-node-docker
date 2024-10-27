@@ -1,4 +1,9 @@
-<form class="mt-4" name="container-form" method="post" action="">
+<form
+    class="mt-4 container-form"
+    name="container-form"
+    method="post"
+    action="/course/handle-action"
+>
     <div>
         <h3>Khóa học đã xóa</h3>
         <a href="/me">Danh sách khóa học </a>
@@ -6,6 +11,7 @@
             <select
                 class="form-control form-control-sm checkbox-select-all-options"
                 name="action"
+                id="actionSelect"
                 required
             >
                 <option value="">-- Hành động --</option>
@@ -63,18 +69,17 @@
                 <td><%= course.createdAt %></td>
                 <td>
                     <a
-                        href="/course/restore/<%= course._id %>"
+                        href=""
                         class="btn btn-link btn-restore"
-                        data-id=""
+                        data-id="<%= course._id %>"
                         >Khôi phục</a
                     >
                     <a
-                        href="/course/delete/force/<%= course._id %>"
+                        href=""
                         id="forceDeleteCourse<%= course._id %>"
                         onclick="getCourseInformationById('<%= course._id %>')"
                         class="btn btn-link"
                         data-toggle="modal"
-                        data-id=""
                         data-target="#delete-course-modal"
                         >Xóa vĩnh viễn</a
                     >

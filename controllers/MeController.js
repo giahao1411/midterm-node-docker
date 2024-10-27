@@ -3,9 +3,13 @@ const Course = require("../models/CourseModel");
 const getAllCourses = async (req, res) => {
     try {
         const courses = await Course.find({ deletedAt: null });
+        const trashCourses = await Course.countDocuments({
+            deletedAt: { $ne: null },
+        });
 
         return res.render("layouts/main", {
             courses,
+            trashCourses,
             selectedCourse: null,
             isEditPage: false,
             isCreatePage: false,

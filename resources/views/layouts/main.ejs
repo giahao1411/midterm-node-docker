@@ -19,19 +19,19 @@
         <div class="container">
             <% if (courses && courses.length> 0 && !isMe && !isCreatePage && !isEditPage && !isTrash) { %>
                 <%- include('../home') %>
-                    <% } else if (isMe) { %>
-                        <%- include('../me/stored-courses') %>
-                            <% } else if (isTrash) { %>
-                                <%- include('../me/trash-courses') %>
-                                    <% } else if (isCreatePage) { %>
-                                        <%- include('../courses/create') %>
-                                            <% } else if (isEditPage) { %>
-                                                <%- include('../courses/edit') %>
-                                                    <% } else { %>
-                                                        <h2 class="text-center mt-5">
-                                                            Không có khóa học nào ngay lúc này
-                                                        </h2>
-                                                        <% } %>
+            <% } else if (isMe) { %>
+                <%- include('../me/stored-courses') %>
+            <% } else if (isTrash) { %>
+                <%- include('../me/trash-courses') %>
+            <% } else if (isCreatePage) { %>
+                <%- include('../courses/create') %>
+            <% } else if (isEditPage) { %>
+                <%- include('../courses/edit') %>
+            <% } else { %>
+                <h2 class="text-center mt-5">
+                    Không có khóa học nào ngay lúc này
+                </h2>
+            <% } %>
         </div>
 
         <footer><%- include('../partials/footer') %></footer>

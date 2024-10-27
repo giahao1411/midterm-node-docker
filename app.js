@@ -10,6 +10,7 @@ const CourseRouter = require("./routes/CourseRouter");
 const MeRouter = require("./routes/MeRouter");
 const LoginRouter = require("./routes/LoginRouter");
 const SearchRouter = require("./routes/SearchRouter");
+const HomeRouter = require("./routes/HomeRouter");
 const db = require("./config/database");
 
 // middleware
@@ -44,8 +45,8 @@ app.use(bodyParser.json());
 app.use(methodOverride("_method")); // allow another method via a query field
 
 // use modules
+app.use("/", HomeRouter);
 app.use("/login", LoginRouter);
-app.use("/", requireLogin, CourseRouter);
 app.use("/course", requireLogin, CourseRouter);
 app.use("/me", requireLogin, MeRouter);
 app.use("/search", requireLogin, SearchRouter);

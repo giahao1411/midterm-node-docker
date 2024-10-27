@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const CourseController = require("../controllers/CourseController");
 
-// course home route
+// get all courses
 router.get("/", CourseController.getAllCourses);
+router.get("/get/:id", CourseController.getCourseInformationById);
 
 // create route
 router.get("/create", CourseController.renderCreatePage);
@@ -14,11 +15,17 @@ router.get("/edit/:id", CourseController.renderEditPage);
 router.patch("/edit/:id", CourseController.editCourse);
 
 // delete route
-router.get("/delete/:id", CourseController.getCourseInformationById);
+router.delete(
+    "/delete/multiple-courses",
+    CourseController.softDeleteMultipleCourses
+);
 router.delete("/delete/:id", CourseController.softDeleteCourse);
-router.delete("/delete/force/:id");
+router.delete("/delete/force/:id", CourseController.forceDeleteCourse);
 
-// restore delete route
-router.patch("/restore/:id");
+// restore deletion route
+router.patch("/restore/:id", CourseController.restoreCourse);
+
+// handle form submit for force delete and restore multiple courses
+router.post("/handle-action", CourseController.handleAction);
 
 module.exports = router;

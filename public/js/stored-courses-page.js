@@ -42,9 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function getCourseInformationById(id) {
     try {
-        const response = await fetch(
-            `http://localhost:3000/course/delete/${id}`
-        );
+        const response = await fetch(`http://localhost:3000/course/get/${id}`);
         if (!response.ok) throw new Error("Failed to connect to server");
 
         const data = await response.json();

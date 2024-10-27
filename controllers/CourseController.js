@@ -149,8 +149,94 @@ const softDeleteCourse = async (req, res) => {
     }
 };
 
+// soft deleted all selected courses
+const softDeleteMultipleCourses = async (req, res) => {
+    const { action, courseIds } = req.body;
+
+    if (action === "delete" && courseIds && courseIds.length > 0) {
+        try {
+            await Course.updateMany(
+                { _id: { $in: courseIds } },
+                { $set: { deletedAt: new Date() } }
+            );
+            return res.redirect("/me");
+        } catch (err) {
+            return res.status(500).json({ message: err.message });
+        }
+    } else {
+        return res
+            .status(400)
+            .json({ message: "Invalid action or no courses selected" });
+    }
+};
+
 // force delete selected course
-const forceDeleteCourse = async (req, res) => {};
+const forceDeleteCourse = async (req, res) => {
+    try {
+        await Course.deleteOne({ _id: req.params.id });
+        return res.redirect("/me");
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+// force deleted all selected courses
+const forceDeleteMultipleCourses = async (courseIds) => {
+    await Course.deleteMany({ _id: { $in: courseIds } });
+};
+
+// restore selected course
+const restoreCourse = async (req, res) => {
+    try {
+        const course = await Course.findById(req.params.id);
+
+        if (!course) {
+            return res
+                .status(404)
+                .json({ message: "Failed to restore course" });
+        }
+
+        course.deletedAt = null;
+        await course.save();
+
+        return res.redirect("/me");
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+// restore multiple selected courses
+const restoreMultipleCourses = async (courseIds) => {
+    await Course.updateMany(
+        { _id: { $in: courseIds } },
+        { $set: { deletedAt: null } }
+    );
+};
+
+// handle action for force delete and restore multiple courses
+const handleAction = async (req, res) => {
+    const { action, courseIds } = req.body;
+
+    try {
+        if (!courseIds && courseIds.length <= 0) {
+            return res.status(400).json({ message: "No course selected" });
+        }
+
+        if (action === "restore") {
+            restoreMultipleCourses(courseIds);
+        } else if (action === "force-delete") {
+            forceDeleteMultipleCourses(courseIds);
+        } else {
+            return res
+                .status(400)
+                .json({ message: "Invalid action" });
+        }
+
+        return res.redirect("/me");
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
 
 module.exports = {
     renderCreatePage,
@@ -160,5 +246,8 @@ module.exports = {
     editCourse,
     getCourseInformationById,
     softDeleteCourse,
+    softDeleteMultipleCourses,
     forceDeleteCourse,
+    restoreCourse,
+    handleAction,
 };

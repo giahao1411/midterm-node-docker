@@ -2,7 +2,7 @@
     class="mt-4"
     name="container-form"
     method="post"
-    action="/courses/handle-form-actions"
+    action="/course/delete/multiple-courses?_method=DELETE"
 >
     <div>
         <div class="d-flex justify-content-between">
@@ -10,7 +10,7 @@
 
             <a href="/course/create" class="btn btn-primary">Thêm khoá học</a>
         </div>
-        <a href="/me/trash">Thùng rác ()</a>
+        <a href="/me/trash">Thùng rác (<%= trashCourses %>)</a>
         <div class="mt-4 d-flex align-items-center">
             <select
                 class="form-control form-control-sm checkbox-select-all-options"
