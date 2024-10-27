@@ -2,39 +2,31 @@ const Course = require("../models/CourseModel");
 const utils = require("../utils/mongooseUtil");
 const slugify = require("slugify");
 
-// local variable
-let courses = [];
-let selectedCourse = null;
-let isCreatePage = false;
-let isEditPage = false;
-let isMe = false;
-
 // render create page
 const renderCreatePage = (req, res) => {
-    isCreatePage = true;
-    isEditPage = false;
     return res.render("layouts/main", {
-        courses,
-        selectedCourse,
-        isCreatePage,
-        isEditPage,
-        isMe,
+        courses: [],
+        selectedCourse: null,
+        isEditPage: false,
+        isCreatePage: true,
+        isMe: false,
+        isTrash: false,
     });
 };
 
 // render edit page
 const renderEditPage = async (req, res) => {
     try {
-        isEditPage = true;
-        selectedCourse = await Course.findById(req.params.id);
+        const selectedCourse = await Course.findById(req.params.id);
 
         if (selectedCourse) {
             return res.render("layouts/main", {
-                courses,
+                courses: [],
                 selectedCourse,
-                isCreatePage,
-                isEditPage,
-                isMe,
+                isCreatePage: false,
+                isEditPage: true,
+                isMe: false,
+                isTrash: false,
             });
         }
 
@@ -47,17 +39,15 @@ const renderEditPage = async (req, res) => {
 // get all courses
 const getAllCourses = async (req, res) => {
     try {
-        isCreatePage = false;
-        isEditPage = false;
-        isMe = false;
-        courses = await Course.find();
+        const courses = await Course.find({ deletedAt: null });
 
         return res.render("layouts/main", {
             courses,
-            selectedCourse,
-            isCreatePage,
-            isEditPage,
-            isMe,
+            selectedCourse: null,
+            isEditPage: false,
+            isCreatePage: false,
+            isMe: false,
+            isTrash: false,
         });
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -126,6 +116,41 @@ const editCourse = async (req, res) => {
     }
 };
 
+// get course information
+const getCourseInformationById = async (req, res) => {
+    try {
+        const resultCourse = await Course.findById(req.params.id);
+
+        if (!resultCourse) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        return res.json(resultCourse);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+// soft delete selected course
+const softDeleteCourse = async (req, res) => {
+    try {
+        const course = await Course.findById(req.params.id);
+
+        if (!course) {
+            return res.status(404).json({ message: "Failed to delete course" });
+        }
+
+        course.deletedAt = new Date();
+        await course.save();
+
+        return res.redirect("/me");
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+// force delete selected course
+const forceDeleteCourse = async (req, res) => {};
 
 module.exports = {
     renderCreatePage,
@@ -133,4 +158,7 @@ module.exports = {
     getAllCourses,
     createCourse,
     editCourse,
+    getCourseInformationById,
+    softDeleteCourse,
+    forceDeleteCourse,
 };

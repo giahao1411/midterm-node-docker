@@ -1,15 +1,34 @@
 const Course = require("../models/CourseModel");
 
-// local variable
-var courses = [];
-var isCreatePage = false;
-var isMe = false;
-
 const getAllCourses = async (req, res) => {
     try {
-        courses = await Course.find();
-        isMe = true;
-        return res.render("layouts/main", { courses, isCreatePage, isMe });
+        const courses = await Course.find({ deletedAt: null });
+
+        return res.render("layouts/main", {
+            courses,
+            selectedCourse: null,
+            isEditPage: false,
+            isCreatePage: false,
+            isMe: true,
+            isTrash: false,
+        });
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+const getAllTrashCourses = async (req, res) => {
+    try {
+        const courses = await Course.find({ deletedAt: { $ne: null } });
+
+        return res.render("layouts/main", {
+            courses,
+            selectedCourse: null,
+            isEditPage: false,
+            isCreatePage: false,
+            isMe: false,
+            isTrash: true,
+        });
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -17,4 +36,5 @@ const getAllCourses = async (req, res) => {
 
 module.exports = {
     getAllCourses,
+    getAllTrashCourses,
 };
