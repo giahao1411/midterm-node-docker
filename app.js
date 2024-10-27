@@ -6,12 +6,12 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 
 // modules exported
-const CourseRouter = require("./routes/CourseRoute");
-const MeRouter = require("./routes/MeRoute");
-const LoginRouter = require("./routes/LoginRoute");
+const CourseRouter = require("./routes/CourseRouter");
+const MeRouter = require("./routes/MeRouter");
+const LoginRouter = require("./routes/LoginRouter");
 const db = require("./config/database");
 
-// middleware 
+// middleware
 const requireLogin = require("./middlewares/requireLogin");
 
 // database connection

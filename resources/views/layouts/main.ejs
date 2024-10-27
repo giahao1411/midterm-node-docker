@@ -22,15 +22,17 @@
             <header><%- include('../partials/header') %></header>
 
             <div class="container">
-                <% if (courses && courses.length > 0 && !isMe && !isCreatePage && !isEditPage) { %> 
+                <% if (courses && courses.length > 0 && !isMe && !isCreatePage && !isEditPage && !isTrash) { %>
                     <%- include('../home') %> 
-                <% } else if (isMe) { %>
-                    <%- include('../me/stored-courses') %>
-                <% } else if (isCreatePage && !isEditPage) { %>
-                    <%- include('../courses/create') %>
-                <% } else if (isEditPage) { %>
-                    <%- include('../courses/edit') %>
-                <% } else { %>
+                <% } else if (isMe) { %> 
+                    <%- include('../me/stored-courses') %> 
+                <% } else if (isTrash) { %> 
+                    <%- include('../partials/footer') %> 
+                <% } else if (isCreatePage) { %> 
+                    <%- include('../courses/create') %> 
+                <% } else if (isEditPage) { %> 
+                    <%- include('../courses/edit') %> 
+                <% } else { %> 
                     <h2 class="text-center mt-5">
                         Không có khóa học nào ngay lúc này
                     </h2>

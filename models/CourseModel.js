@@ -10,7 +10,7 @@ const CourseSchema = new Schema(
         videoId: { type: String, require: true },
         level: { type: String },
         slug: { type: String, unique: true },
-        deleteAt: { type: Date, default: null },
+        deletedAt: { type: Date, default: null },
     },
     {
         _id: false,
