@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // When delete course btn clicked
     btnDeleteCourse.onclick = function () {
-        deleteForm.action = "/course/delete/force/" + courseId + "?_method=DELETE";
+        deleteForm.action =
+            "/course/delete/force/" + courseId + "?_method=DELETE";
         deleteForm.submit();
     };
 
@@ -67,3 +68,5 @@ async function getCourseInformationById(id) {
         console.error(err);
     }
 }
+
+console.log("im in");

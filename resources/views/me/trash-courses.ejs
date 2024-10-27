@@ -1,7 +1,7 @@
 <form class="mt-4" name="container-form" method="post" action="">
     <div>
         <h3>Khóa học đã xóa</h3>
-        <a href="">Danh sách khóa học </a>
+        <a href="/me">Danh sách khóa học </a>
         <div class="mt-4 d-flex align-items-center">
             <select
                 class="form-control form-control-sm checkbox-select-all-options"
@@ -80,11 +80,11 @@
                     >
                 </td>
             </tr>
-            <% }) <% if (courses.length <= 0) { %>
+            <% }) %> <% if (courses.length <= 0) { %>
             <tr>
                 <td colspan="5" class="text-center">
                     Thùng rác trống
-                    <a href="">Danh sách khóa học</a>
+                    <a href="/me">Danh sách khóa học</a>
                 </td>
             </tr>
             <% } %>
