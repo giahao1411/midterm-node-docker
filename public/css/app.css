@@ -1,13 +1,32 @@
 .card-course-item {
-  margin-top: 16px; }
+  margin-top: 16px;
+}
 
 .user-avater {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  margin-right: 4px; }
+  margin-right: 4px;
+}
 
 .checkbox-select-all-options {
   width: 140px;
   margin: 0 16px;
-  text-align: center; }
+  text-align: center;
+}
+
+.search-input {
+  height: 30px;
+  width: 150px;
+  font-size: 14px;
+}
+
+.search-btn {
+  height: 30px;
+  width: 35px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}

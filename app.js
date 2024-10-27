@@ -9,6 +9,7 @@ const session = require("express-session");
 const CourseRouter = require("./routes/CourseRouter");
 const MeRouter = require("./routes/MeRouter");
 const LoginRouter = require("./routes/LoginRouter");
+const SearchRouter = require("./routes/SearchRouter");
 const db = require("./config/database");
 
 // middleware
@@ -47,6 +48,7 @@ app.use("/login", LoginRouter);
 app.use("/", requireLogin, CourseRouter);
 app.use("/course", requireLogin, CourseRouter);
 app.use("/me", requireLogin, MeRouter);
+app.use("/search", requireLogin, SearchRouter);
 
 // Start server
 const PORT = process.env.PORT || 3000;

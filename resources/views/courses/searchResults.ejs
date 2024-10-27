@@ -1,0 +1,22 @@
+<div class="row">
+    <% if (courses.length > 0) { %>
+        <% courses.forEach(course => { %>
+            <div class="col-sm-6 col-lg-4">
+                <div class="card card-course-item">
+                    <a href="">
+                        <img class="card-img-top" src="<%= course.image %>" alt="<%= course.name %>"/>
+                    </a>
+                    <div class="card-body">
+                        <a href="/course/show">
+                            <h5 class="card-title"><%= course.name %></h5>
+                        </a>
+                        <p class="card-text"><%= course.description %></p>
+                        <a href="#" class="btn btn-primary">Mua khóa học</a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p>Không tìm thấy kết quả nào.</p>
+    <% } %>
+</div>
