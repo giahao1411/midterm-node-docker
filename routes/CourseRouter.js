@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const CourseController = require("../controllers/CourseController");
+const authLogin = require("../middlewares/requireLogin");
+
+//login route
+router.use(authLogin);
 
 // get all courses
 router.get("/", CourseController.getAllCourses);
