@@ -14,7 +14,7 @@ const HomeRouter = require("./routes/HomeRouter");
 const db = require("./config/database");
 
 // middleware
-const requireLogin = require("./middlewares/requireLogin");
+const Middlewares = require("./middlewares/LoginMiddlewares");
 
 // database connection
 db.connect();
@@ -46,10 +46,10 @@ app.use(methodOverride("_method")); // allow another method via a query field
 
 // use modules
 app.use("/", HomeRouter);
-app.use("/login", LoginRouter);
-app.use("/course", requireLogin, CourseRouter);
-app.use("/me", requireLogin, MeRouter);
-app.use("/search", requireLogin, SearchRouter);
+app.use("/login", Middlewares.checkLogin, LoginRouter);
+app.use("/course", Middlewares.requireLogin, CourseRouter);
+app.use("/me", Middlewares.requireLogin, MeRouter);
+app.use("/search", Middlewares.requireLogin, SearchRouter);
 
 // Start server
 const PORT = process.env.PORT || 3000;
