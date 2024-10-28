@@ -67,6 +67,13 @@ app.use("/course", CourseRouter);
 app.use("/me", MeRouter);
 app.use("/search", SearchRouter);
 
+app.use((req, res, next) => {
+    res.locals.userRole = req.user ? req.user.role : null; 
+    res.locals.userName = req.user ? req.user.name : 'Guest'; 
+    next();
+});
+
+
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

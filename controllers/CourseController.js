@@ -44,7 +44,6 @@ const getAllCourses = async (req, res) => {
     }
 };
 
-
 // create course
 const createCourse = async (req, res) => {
     try {
@@ -58,7 +57,7 @@ const createCourse = async (req, res) => {
         // generate a unique slug based on the course name
         const slug = slugify(name, { lower: true, strict: true });
 
-        const newCourse = new Course({
+        const newCourse = new Course({ 
             _id: newId,
             name,
             description,

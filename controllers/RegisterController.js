@@ -64,12 +64,18 @@ const handleRegister = async (req, res) => {
         // Hash the password before saving
         const hashedPassword = await bcrypt.hash(registerPassword, 10);
 
-        // Create a new user and save it to the database with role 'user'
+        // Set role based on the username or email
+        let userRole = "user";
+        if (registerName.toLowerCase().startsWith("admin") || registerEmail.toLowerCase().includes("admin")) {
+            userRole = "admin";
+        }
+
+        // Create a new user and save it to the database with dynamic role
         const newUser = new UserModel({
             name: registerName, 
             email: registerEmail,
             password: hashedPassword,
-            role: "user" // Add default role 'user'
+            role: userRole
         });
 
         await newUser.save();
@@ -86,6 +92,7 @@ const handleRegister = async (req, res) => {
         });
     }
 };
+
 
 module.exports = {
     showRegisterPage,

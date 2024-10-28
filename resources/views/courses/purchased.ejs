@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <h3>Khóa học đã mua</h3>
+
+    <% if (purchasedCourses && purchasedCourses.length > 0) { %>
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Tên khóa học</th>
+                    <th scope="col">Ngày mua</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% purchasedCourses.forEach(course => { %>
+                    <tr>
+                        <th scope="row"><%= course._id %></th>
+                        <td><%= course.name %></td>
+                        <td><%= course.purchaseDate %></td>
+                        <td>
+                            <% if (course.status === 'completed') { %>
+                                Hoàn thành
+                            <% } else { %>
+                                Đang học
+                            <% } %>
+                        </td>
+                        <td>
+                            <a href="/course/view/<%= course._id %>" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <div class="alert alert-info mt-4">
+            Bạn chưa mua khóa học nào.
+        </div>
+    <% } %>
+</div>
