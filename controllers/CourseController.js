@@ -6,11 +6,7 @@ const slugify = require("slugify");
 const renderCreatePage = (req, res) => {
     return res.render("layouts/main", {
         courses: [],
-        selectedCourse: null,
-        isEditPage: false,
-        isCreatePage: true,
-        isMe: false,
-        isTrash: false,
+        viewPath: "../courses/create",
     });
 };
 
@@ -23,10 +19,7 @@ const renderEditPage = async (req, res) => {
             return res.render("layouts/main", {
                 courses: [],
                 selectedCourse,
-                isCreatePage: false,
-                isEditPage: true,
-                isMe: false,
-                isTrash: false,
+                viewPath: "../courses/edit",
             });
         }
 
@@ -43,11 +36,7 @@ const getAllCourses = async (req, res) => {
 
         return res.render("layouts/main", {
             courses,
-            selectedCourse: null,
-            isEditPage: false,
-            isCreatePage: false,
-            isMe: false,
-            isTrash: false,
+            viewPath: "../home",
         });
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -126,6 +115,25 @@ const getCourseInformationById = async (req, res) => {
         }
 
         return res.json(resultCourse);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+// show selected course
+const showCourse = async (req, res) => {
+    try {
+        const selectedCourse = await Course.findById(req.params.id);
+
+        if (selectedCourse) {
+            return res.render("layouts/main", {
+                courses: [],
+                selectedCourse,
+                viewPath: "../courses/show",
+            });
+        }
+
+        return res.status(404).json({ message: "Course Not Found" });
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -227,9 +235,7 @@ const handleAction = async (req, res) => {
         } else if (action === "force-delete") {
             forceDeleteMultipleCourses(courseIds);
         } else {
-            return res
-                .status(400)
-                .json({ message: "Invalid action" });
+            return res.status(400).json({ message: "Invalid action" });
         }
 
         return res.redirect("/me");
@@ -245,6 +251,7 @@ module.exports = {
     createCourse,
     editCourse,
     getCourseInformationById,
+    showCourse,
     softDeleteCourse,
     softDeleteMultipleCourses,
     forceDeleteCourse,

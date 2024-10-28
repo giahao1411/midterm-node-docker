@@ -10,11 +10,7 @@ const getAllCourses = async (req, res) => {
         return res.render("layouts/main", {
             courses,
             trashCourses,
-            selectedCourse: null,
-            isEditPage: false,
-            isCreatePage: false,
-            isMe: true,
-            isTrash: false,
+            viewPath: "../me/stored-courses",
         });
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -27,11 +23,7 @@ const getAllTrashCourses = async (req, res) => {
 
         return res.render("layouts/main", {
             courses,
-            selectedCourse: null,
-            isEditPage: false,
-            isCreatePage: false,
-            isMe: false,
-            isTrash: true,
+            viewPath: "../me/trash-courses",
         });
     } catch (err) {
         return res.status(500).json({ message: err.message });
