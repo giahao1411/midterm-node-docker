@@ -4,6 +4,9 @@ require("dotenv").config();
 
 // get login
 const renderLoginPage = (req, res) => {
+    if (req.session.user) {
+        return res.redirect("/course"); // Redirect if already logged in
+    }
     return res.render("login", {
         errorMessage: null,
         email: "",
@@ -50,12 +53,14 @@ const loginCourse = (req, res) => {
                     password: inputPassword,
                 });
             } else {
-                req.session.user = inputEmail;
-                res.redirect("/course");
+                req.session.user = inputEmail; // Set user in session
+                console.log("Session after login:", req.session); // Log the session for debugging
+                res.redirect("/course"); // Redirect to the course page
             }
         });
     }
 
+    // If there's an error before bcrypt comparison
     if (error.length > 0) {
         res.render("login", {
             errorMessage: error,
