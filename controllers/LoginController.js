@@ -1,5 +1,6 @@
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // get login
@@ -53,9 +54,18 @@ const loginCourse = (req, res) => {
                     password: inputPassword,
                 });
             } else {
-                req.session.user = inputEmail; // Set user in session
-                console.log("Session after login:", req.session); // Log the session for debugging
-                res.redirect("/course"); // Redirect to the course page
+                // Generate JWT token after successful password verification
+                const token = jwt.sign(
+                    { email: inputEmail },
+                    process.env.JWT_SECRET,
+                    { expiresIn: "2h" }
+                );
+                console.log(token);
+
+                res.cookie("token", token, { httpOnly: true });
+
+                // Redirect to the course page
+                res.redirect("/course");
             }
         });
     }
