@@ -70,7 +70,4 @@ const loginCourse = (req, res) => {
     }
 };
 
-module.exports = {
-    renderLoginPage,
-    loginCourse,
-};
+module.exports = { renderLoginPage, loginCourse };
