@@ -1,16 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const CourseController = require("../controllers/CourseController");
+const checkRole = require("../middlewares/CheckRole");
+const requireAuth = require("../middlewares/TokenAuth");
+
+
+router.use(requireAuth);
+// create route
+router.get("/create", checkRole(["admin"]), CourseController.renderCreatePage);
+router.post("/create", checkRole(["admin"]), CourseController.createCourse);
 
 // get all courses
 router.get("/", CourseController.getAllCourses);
 router.get("/get/:id", CourseController.getCourseInformationById);
 
 router.get("/show/:id", CourseController.showCourse);
-
-// create route
-router.get("/create", CourseController.renderCreatePage);
-router.post("/create", CourseController.createCourse);
 
 // edit route
 router.get("/edit/:id", CourseController.renderEditPage);

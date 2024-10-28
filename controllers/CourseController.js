@@ -37,11 +37,13 @@ const getAllCourses = async (req, res) => {
         return res.render("layouts/main", {
             courses,
             viewPath: "../home",
+            userName: res.locals.userName // Make sure userName is passed to the view
         });
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
 };
+
 
 // create course
 const createCourse = async (req, res) => {

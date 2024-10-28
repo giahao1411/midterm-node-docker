@@ -1,83 +1,66 @@
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const UserModel = require("../models/UserModel");
 require("dotenv").config();
 
-// get login
+// Hiển thị trang đăng nhập
 const renderLoginPage = (req, res) => {
     if (req.session.user) {
-        return res.redirect("/course"); // Redirect if already logged in
+        return res.redirect("/course"); // Chuyển hướng nếu đã đăng nhập
     }
     return res.render("login", {
         errorMessage: null,
         email: "",
-        password: "",
+        password: "" // Thêm biến password để tránh lỗi
     });
 };
 
-// handling login information
-const loginCourse = (req, res) => {
+// Xử lý đăng nhập
+const loginCourse = async (req, res) => {
     let { inputEmail, inputPassword } = req.body;
     let error = "";
 
-    const storedEmail = process.env.ADMIN_EMAIL;
-    const storedPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+    try {
+        const user = await UserModel.findOne({ email: inputEmail });
+        if (!user) {
+            error = "Sai email hoặc mật khẩu";
+            return res.render("login", {
+                errorMessage: error,
+                email: inputEmail,
+                password: inputPassword
+            });
+        }
 
-    if (!inputEmail) {
-        error = "Nhập email";
-    } else if (!validator.isEmail(inputEmail)) {
-        error = "Sai định dạng";
-    } else if (!inputPassword) {
-        error = "Nhập mật khẩu";
-    } else if (inputPassword.length < 6) {
-        error = "Mật khẩu phải có ít nhất 6 kí tự";
-    } else if (inputEmail !== storedEmail) {
-        error = "Sai email";
-    } else {
-        // Compare password asynchronously with bcrypt
-        bcrypt.compare(inputPassword, storedPasswordHash, (err, isMatch) => {
-            if (err) {
-                return res.render("login", {
-                    errorMessage: "Đã xảy ra lỗi, vui lòng thử lại.",
-                    email: inputEmail,
-                    password: inputPassword,
-                });
-            }
-            if (!isMatch) {
-                error = "Sai mật khẩu";
-            }
+        const isMatch = await bcrypt.compare(inputPassword, user.password);
+        if (!isMatch) {
+            error = "Sai email hoặc mật khẩu";
+            return res.render("login", {
+                errorMessage: error,
+                email: inputEmail,
+                password: inputPassword
+            });
+        }
 
-            if (error.length > 0) {
-                res.render("login", {
-                    errorMessage: error,
-                    email: inputEmail,
-                    password: inputPassword,
-                });
-            } else {
-                // Generate JWT token after successful password verification
-                const token = jwt.sign(
-                    { email: inputEmail },
-                    process.env.JWT_SECRET,
-                    { expiresIn: "2h" }
-                );
-                console.log(token);
+        // Tạo JWT chứa cả tên đăng nhập và vai trò
+        const token = jwt.sign(
+            { userName: user.name, role: user.role.toLowerCase() }, // Chuyển vai trò thành chữ thường
+            process.env.JWT_SECRET,
+            { expiresIn: "2h" }
+        );
 
-                res.cookie("token", token, { httpOnly: true });
 
-                // Redirect to the course page
-                res.redirect("/course");
-            }
-        });
-    }
-
-    // If there's an error before bcrypt comparison
-    if (error.length > 0) {
+        res.cookie("token", token, { httpOnly: true });
+        res.redirect("/course");
+    } catch (err) {
+        console.error("Lỗi trong quá trình đăng nhập:", err);
         res.render("login", {
-            errorMessage: error,
+            errorMessage: "Đã xảy ra lỗi, vui lòng thử lại sau.",
             email: inputEmail,
-            password: inputPassword,
+            password: inputPassword
         });
     }
 };
+
 
 module.exports = { renderLoginPage, loginCourse };

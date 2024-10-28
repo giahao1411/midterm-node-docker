@@ -1,0 +1,49 @@
+body {
+    background-color: #f7f9fc;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.register-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.register-container h2 {
+    color: #333;
+    font-weight: 700;
+}
+
+.form-control {
+    border: 1.5px solid #ddd;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #6B73FF;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: #6B73FF;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #000DFF;
+}
+
+.alert-danger {
+    margin-top: 10px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #555;
+}

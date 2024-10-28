@@ -9,28 +9,29 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Search Form -->
                 <form class="form-inline my-2 my-lg-0" id="searchForm">
-                    <input class="form-control form-control-sm mr-sm-2 search-input" type="search" placeholder="Tìm kiếm"
-                        aria-label="Search" name="query" id="searchInput">
+                    <input class="form-control form-control-sm mr-sm-2 search-input" type="search"
+                        placeholder="Tìm kiếm" aria-label="Search" name="query" id="searchInput">
                     <button class="btn btn-outline-success btn-sm my-2 my-sm-0 search-btn" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
-                
-                
+
                 <!-- User Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="/images/logo-tdtu.jpg" alt="" class="user-avater" />
-                        Hào Võ
+                        <%= userName %> <!-- Hiển thị tên đăng nhập thay vì email -->
                     </a>
+
+
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/course/create">Đăng khóa học</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/me">Khóa học của tôi</a>
                         <a class="dropdown-item" href="/course/news">Bài viết của tôi</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/login">Đăng xuất</a>
+                        <a class="dropdown-item" href="/home">Đăng xuất</a>
                     </div>
                 </li>
             </ul>

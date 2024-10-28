@@ -1,24 +1,30 @@
 const jwt = require("jsonwebtoken");
 
 const requireAuth = (req, res, next) => {
-    // Check if cookies are parsed
-    const token =
-        req.cookies.token || req.headers["authorization"]?.split(" ")[1]; // Bearer token
+    const token = req.cookies.token || req.headers["authorization"]?.split(" ")[1];
 
     if (!token) {
-        return res.redirect("/login"); // Redirect if no token found
+        req.session.errorMessage = "Vui lòng đăng nhập để tiếp tục.";
+        return res.redirect("/login");
     }
 
-    // Verify the token
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
-            return res.redirect("/login"); // Redirect if token is invalid
+            req.session.errorMessage = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.";
+            return res.redirect("/login");
         }
 
-        // Attach user info to the request
-        req.user = decoded; // You can access user info in subsequent routes
-        next(); // Proceed to the next middleware or route handler
+        // Chuyển vai trò thành chữ thường và gán vào req.user
+        req.user = {
+            userName: decoded.userName,
+            role: decoded.role?.toLowerCase()
+        };
+
+        // Gán tên đăng nhập vào res.locals
+        res.locals.userName = decoded.userName;
+
+        next();
     });
 };
 
-module.exports = requireAuth; // Correct export
+module.exports = requireAuth;

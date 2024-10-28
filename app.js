@@ -12,11 +12,14 @@ const MeRouter = require("./routes/MeRouter");
 const LoginRouter = require("./routes/LoginRouter");
 const SearchRouter = require("./routes/SearchRouter");
 const HomeRouter = require("./routes/HomeRouter");
+const RegisterRouter = require("./routes/RegisterRouter");
+
 const db = require("./config/database");
 
 // middleware
 const Middlewares = require("./middlewares/LoginMiddlewares");
 const requireAuth = require("./middlewares/TokenAuth");
+const setUser = require("./middlewares/SetUser");
 
 // database connection
 db.connect();
@@ -51,12 +54,18 @@ app.use(bodyParser.json());
 app.use(methodOverride("_method")); // allow another method via a query field
 app.use(cookieParser());
 
-// use modules
-app.use("/", HomeRouter);
+// Set routes that do not require pre-authentication
 app.use("/login", Middlewares.checkLogin, LoginRouter);
-app.use("/course", requireAuth, CourseRouter);
-app.use("/me", requireAuth, MeRouter);
-app.use("/search", requireAuth, SearchRouter);
+app.use("/register", RegisterRouter);
+
+// Use requireAuth và setUser for all remaining routes
+app.use(requireAuth, setUser);
+
+// Use modules
+app.use("/", HomeRouter);
+app.use("/course", CourseRouter);
+app.use("/me", MeRouter);
+app.use("/search", SearchRouter);
 
 // Start server
 const PORT = process.env.PORT || 3000;
