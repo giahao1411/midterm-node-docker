@@ -1,7 +1,3 @@
-.card-course-item {
-  margin-top: 16px;
-}
-
 .user-avater {
   width: 28px;
   height: 28px;
@@ -32,11 +28,19 @@
 }
 
 /* Cấu trúc chung cho layout */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body,
 html {
   margin: 0;
   padding: 0;
   height: 100%;
+  flex-direction: column;
+  display: flex;
 }
 
 .wrapper {
@@ -46,9 +50,21 @@ html {
   /* Đảm bảo chiều cao của wrapper bao phủ toàn bộ màn hình */
 }
 
+.content-container {
+  padding-bottom: 200px;
+}
+
 .content {
   flex: 1;
   /* Đẩy footer xuống cuối trang */
+}
+
+footer {
+  /* display: none; */
+  position: fixed;
+  bottom: 0;
+  line-height: 50px;
+  text-align: center;
 }
 
 .footer {
@@ -102,6 +118,24 @@ html {
 
 .footer-center a:hover {
   text-decoration: underline;
+}
+
+.card-container {
+  margin-top: 40px;
+}
+
+.card-course-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 16px;
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Responsive Styles */

@@ -10,13 +10,13 @@ const checkRole = (roles) => {
             return res.status(403).render("error", {
                 errorCode: 403,
                 errorMessage: "Cấm truy cập",
-                errorDescription: "Bạn không có quyền truy cập vào trang này."
+                errorDescription: "Bạn không có quyền truy cập vào trang này.",
             });
         }
 
         // Trường hợp người dùng có quyền admin và muốn chuyển hướng đến các trang chỉ dành cho admin
-        if (roles.includes('admin') && userRole !== 'admin') {
-            return res.redirect('/course/purchased');
+        if (roles.includes("admin") && userRole !== "admin") {
+            return res.redirect("/course/purchased");
         }
 
         next();
