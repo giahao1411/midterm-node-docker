@@ -22,7 +22,7 @@ exports.searchCourses = async (req, res) => {
         // find courses that satisfy at least one of the conditions
         const courses = await Course.find({
             $or: searchConditions,
-            $e: { deletedAt: null },
+            deletedAt: null,
         });
 
         res.render("courses/searchResults", { courses, layout: false });
