@@ -53,12 +53,12 @@ app.use(methodOverride("_method")); // allow another method via a query field
 app.use(cookieParser());
 app.use(setUser);
 
-// set local variables for EJS templates
-app.use((req, res, next) => {
-    res.locals.userRole = req.user ? req.user.role : null;
-    res.locals.userName = req.user ? req.user.name : "Guest";
-    next();
-});
+// // set local variables for EJS templates
+// app.use((req, res, next) => {
+//     res.locals.userRole = req.user ? req.user.role : null;
+//     res.locals.userName = req.user ? req.user.name : "Guest";
+//     next();
+// });
 
 // Use modules
 app.use("/login", LoginRouter);

@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const session = require("express-session");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/UserModel");
 require("dotenv").config();
@@ -47,6 +48,11 @@ const loginCourse = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: "15m" }
         );
+
+        req.session.userLogin = {
+            userName: user.name,
+            role: user.role.toLowerCase(),
+        };
 
         res.cookie("token", token, { httpOnly: true });
         res.redirect("/course");
