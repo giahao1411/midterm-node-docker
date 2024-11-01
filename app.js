@@ -20,6 +20,7 @@ const db = require("./config/database");
 const Middlewares = require("./middlewares/LoginMiddlewares");
 const requireAuth = require("./middlewares/TokenAuth");
 const setUser = require("./middlewares/SetUser");
+const decodeToken = require("./middlewares/decodeToken");
 
 // database connection
 db.connect();
@@ -54,25 +55,26 @@ app.use(bodyParser.json());
 app.use(methodOverride("_method")); // allow another method via a query field
 app.use(cookieParser());
 
-// Set routes that do not require pre-authentication
-app.use("/login", Middlewares.checkLogin, LoginRouter);
-app.use("/register", RegisterRouter);
-
 // Use requireAuth và setUser for all remaining routes
 app.use(requireAuth, setUser);
 
+// decode jwt token and set req.user
+app.use(decodeToken);
+
+// set local variables for EJS templates
+app.use((req, res, next) => {
+    res.locals.userRole = req.user ? req.user.role : null;
+    res.locals.userName = req.user ? req.user.name : "Guest";
+    next();
+});
+
 // Use modules
+app.use("/login", Middlewares.checkLogin, LoginRouter);
+app.use("/register", RegisterRouter);
 app.use("/", HomeRouter);
 app.use("/course", CourseRouter);
 app.use("/me", MeRouter);
 app.use("/search", SearchRouter);
-
-app.use((req, res, next) => {
-    res.locals.userRole = req.user ? req.user.role : null; 
-    res.locals.userName = req.user ? req.user.name : 'Guest'; 
-    next();
-});
-
 
 // Start server
 const PORT = process.env.PORT || 3000;

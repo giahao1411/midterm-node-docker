@@ -37,7 +37,7 @@ const getAllCourses = async (req, res) => {
         return res.render("layouts/main", {
             courses,
             viewPath: "../home",
-            userName: res.locals.userName // Make sure userName is passed to the view
+            userName: res.locals.userName, // Make sure userName is passed to the view
         });
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -57,7 +57,7 @@ const createCourse = async (req, res) => {
         // generate a unique slug based on the course name
         const slug = slugify(name, { lower: true, strict: true });
 
-        const newCourse = new Course({ 
+        const newCourse = new Course({
             _id: newId,
             name,
             description,

@@ -1,4 +1,3 @@
-const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/UserModel");
@@ -12,7 +11,7 @@ const renderLoginPage = (req, res) => {
     return res.render("login", {
         errorMessage: null,
         email: "",
-        password: "" // Thêm biến password để tránh lỗi
+        password: "", // Thêm biến password để tránh lỗi
     });
 };
 
@@ -28,7 +27,7 @@ const loginCourse = async (req, res) => {
             return res.render("login", {
                 errorMessage: error,
                 email: inputEmail,
-                password: inputPassword
+                password: inputPassword,
             });
         }
 
@@ -38,7 +37,7 @@ const loginCourse = async (req, res) => {
             return res.render("login", {
                 errorMessage: error,
                 email: inputEmail,
-                password: inputPassword
+                password: inputPassword,
             });
         }
 
@@ -46,9 +45,8 @@ const loginCourse = async (req, res) => {
         const token = jwt.sign(
             { userName: user.name, role: user.role.toLowerCase() }, // Chuyển vai trò thành chữ thường
             process.env.JWT_SECRET,
-            { expiresIn: "2h" }
+            { expiresIn: "15m" }
         );
-
 
         res.cookie("token", token, { httpOnly: true });
         res.redirect("/course");
@@ -57,10 +55,15 @@ const loginCourse = async (req, res) => {
         res.render("login", {
             errorMessage: "Đã xảy ra lỗi, vui lòng thử lại sau.",
             email: inputEmail,
-            password: inputPassword
+            password: inputPassword,
         });
     }
 };
 
+const logOut = (req, res) => {
+    res.clearCookie("token");
+    req.session.destroy();
+    res.redirect("/login");
+};
 
-module.exports = { renderLoginPage, loginCourse };
+module.exports = { renderLoginPage, loginCourse, logOut };

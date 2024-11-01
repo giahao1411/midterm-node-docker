@@ -9,4 +9,7 @@ router.get("/", MeController.getAllCourses);
 // me trash route
 router.get("/trash", MeController.getAllTrashCourses);
 
+// me get purchased courses
+router.get("/purchased");
+
 module.exports = router;

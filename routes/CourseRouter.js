@@ -5,6 +5,7 @@ const checkRole = require("../middlewares/CheckRole");
 const requireAuth = require("../middlewares/TokenAuth");
 
 router.use(requireAuth);
+
 // create route
 router.get("/create", checkRole(["admin"]), CourseController.renderCreatePage);
 router.post("/create", checkRole(["admin"]), CourseController.createCourse);
