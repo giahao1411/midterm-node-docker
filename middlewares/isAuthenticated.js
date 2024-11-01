@@ -1,5 +1,5 @@
-const isAuthenticated = (req, res, next) => {
-    if (!req.user) {
-        return res.render();
-    }
-};
+// const isAuthenticated = (req, res, next) => {
+//     if (!req.user) {
+//         return res.render();
+//     }
+// };

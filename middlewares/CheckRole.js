@@ -1,5 +1,3 @@
-// ./middlewares/CheckRole.js
-
 const checkRole = (roles) => {
     return (req, res, next) => {
         const userRole = req.user?.role;

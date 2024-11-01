@@ -24,6 +24,7 @@ const requireAuth = (req, res, next) => {
 
         // Gán tên đăng nhập vào res.locals
         res.locals.userName = decoded.userName;
+        res.locals.userRole = decoded.role?.toLowerCase();
 
         next();
     });

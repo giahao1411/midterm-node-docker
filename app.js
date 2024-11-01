@@ -16,11 +16,8 @@ const RegisterRouter = require("./routes/RegisterRouter");
 
 const db = require("./config/database");
 
-// middleware
-const Middlewares = require("./middlewares/LoginMiddlewares");
-const requireAuth = require("./middlewares/TokenAuth");
+// middleware exported
 const setUser = require("./middlewares/SetUser");
-const decodeToken = require("./middlewares/decodeToken");
 
 // database connection
 db.connect();
@@ -54,12 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride("_method")); // allow another method via a query field
 app.use(cookieParser());
-
-// Use requireAuth và setUser for all remaining routes
-app.use(requireAuth, setUser);
-
-// decode jwt token and set req.user
-app.use(decodeToken);
+app.use(setUser);
 
 // set local variables for EJS templates
 app.use((req, res, next) => {
@@ -69,7 +61,7 @@ app.use((req, res, next) => {
 });
 
 // Use modules
-app.use("/login", Middlewares.checkLogin, LoginRouter);
+app.use("/login", LoginRouter);
 app.use("/register", RegisterRouter);
 app.use("/", HomeRouter);
 app.use("/course", CourseRouter);
