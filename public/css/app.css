@@ -69,7 +69,7 @@ footer {
 
 .footer {
   background-color: #f8f9fa;
-  padding: 20px 0;
+  padding: 5px 0;
   width: 100%;
   font-family: Arial, sans-serif;
 }
@@ -80,7 +80,7 @@ footer {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 10px;
   flex-wrap: wrap;
 }
 
@@ -121,14 +121,14 @@ footer {
 }
 
 .card-container {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .card-course-item {
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
 .card-body {
@@ -136,6 +136,15 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.course-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.course-btn .btn {
+  margin: 5px;
 }
 
 /* Responsive Styles */

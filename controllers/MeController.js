@@ -1,4 +1,5 @@
 const Course = require("../models/CourseModel");
+const User = require("../models/UserModel");
 
 const getAllCourses = async (req, res) => {
     try {
@@ -30,7 +31,19 @@ const getAllTrashCourses = async (req, res) => {
     }
 };
 
+const getCart = async (req, res) => {
+    try {
+        return res.render("layouts/main", {
+            courses: null,
+            viewPath: "../me/cart",
+        });
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
     getAllCourses,
     getAllTrashCourses,
+    getCart,
 };

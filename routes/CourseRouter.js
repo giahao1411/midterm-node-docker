@@ -17,21 +17,38 @@ router.get("/get/:id", CourseController.getCourseInformationById);
 router.get("/show/:id", CourseController.showCourse);
 
 // edit route
-router.get("/edit/:id", CourseController.renderEditPage);
-router.patch("/edit/:id", CourseController.editCourse);
+router.get("/edit/:id", checkRole(["admin"]), CourseController.renderEditPage);
+router.patch("/edit/:id", checkRole(["admin"]), CourseController.editCourse);
 
 // delete route
 router.delete(
     "/delete/multiple-courses",
+    checkRole(["admin"]),
     CourseController.softDeleteMultipleCourses
 );
-router.delete("/delete/:id", CourseController.softDeleteCourse);
-router.delete("/delete/force/:id", CourseController.forceDeleteCourse);
+router.delete(
+    "/delete/:id",
+    checkRole(["admin"]),
+    CourseController.softDeleteCourse
+);
+router.delete(
+    "/delete/force/:id",
+    checkRole(["admin"]),
+    CourseController.forceDeleteCourse
+);
 
 // restore deletion route
-router.patch("/restore/:id", CourseController.restoreCourse);
+router.patch(
+    "/restore/:id",
+    checkRole(["admin"]),
+    CourseController.restoreCourse
+);
 
 // handle form submit for force delete and restore multiple courses
-router.post("/handle-action", CourseController.handleAction);
+router.post(
+    "/handle-action",
+    checkRole(["admin"]),
+    CourseController.handleAction
+);
 
 module.exports = router;

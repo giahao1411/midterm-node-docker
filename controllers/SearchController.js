@@ -25,8 +25,8 @@ exports.searchCourses = async (req, res) => {
             deletedAt: null,
         });
 
-        res.render("courses/searchResults", { courses, layout: false });
+        return res.render("courses/searchResults", { courses, layout: false });
     } catch (error) {
-        res.status(500).send("Có lỗi xảy ra khi tìm kiếm");
+        return res.redirect("/course");
     }
 };

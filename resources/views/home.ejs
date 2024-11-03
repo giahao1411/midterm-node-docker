@@ -21,7 +21,18 @@
                                 <h5 class="card-title"><%= course.name %></h5>
                             </a>
                             <p class="card-text"><%= course.description %></p>
-                            <a href="#" class="btn btn-primary">Mua khóa học</a>
+                            <div class="row course-btn">
+                                <a
+                                    href="/me/cart/<%= course._id %>?_method=POST"
+                                    class="btn btn-primary"
+                                    >Thêm vào giỏ hàng</a
+                                >
+                                <a
+                                    href="/me/purchased/<%= course._id %>?_method=POST"
+                                    class="btn btn-success"
+                                    >Mua khóa học</a
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
