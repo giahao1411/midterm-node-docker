@@ -14,10 +14,14 @@ router.get("/trash", checkRole(["admin"]), MeController.getAllTrashCourses);
 
 // me get purchased courses
 router.get("/purchased", MeController.getPurchasedCourses);
-router.post("/purchase/:id");
+router.post("/purchase", MeController.purchaseMultipleCourses);
 
 // me add courses in cart
 router.get("/cart", MeController.getCart);
 router.post("/cart/:id", MeController.addToCart);
+router.post("/cart/purchase/:id", MeController.purchaseCourse);
+
+// me remove course from cart
+router.delete("/cart/remove/:id", MeController.removeCourseFromCart);
 
 module.exports = router;

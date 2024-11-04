@@ -36,9 +36,19 @@ const getAllTrashCourses = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
+    const userId = req.session.userLogin.userId;
+    
     try {
+        const user = await User.findById(userId).select("inCartCourses");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const courses = await Course.find({ _id: { $in: user.inCartCourses } });
+
         return res.render("layouts/main", {
-            courses: null,
+            courses,
             message: null,
             errMessage: null,
             viewPath: "../me/cart",
@@ -79,7 +89,76 @@ const addToCart = async (req, res) => {
     }
 };
 
-const purchaseCourse = async (req, res) => {};
+const purchaseCourse = async (req, res) => {
+    const userId = req.session.userLogin.userId;
+    const courseId = req.params.id;
+
+    try {
+        const user = await User.findById(userId).select("inCartCourses");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // check if the course is already in inCartCourses
+        const isCourseInCart = user.inCartCourses.includes(courseId);
+
+        if (isCourseInCart) {
+            req.session.errMessage = "Khóa học đã tồn tại trong giỏ hàng";
+            return res.redirect("/course");
+        }
+
+        user.inCartCourses.push(courseId);
+        await user.save();
+
+        return res.redirect("/me/cart");
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+const purchaseMultipleCourses = async (req, res) => {
+    const userId = req.session.userLogin.userId;
+    const courseIds = req.body.courseIds.map(Number); // convert ids to number type
+
+    try {
+        await User.findByIdAndUpdate(userId, {
+            $addToSet: { purchasedCourses: { $each: courseIds } },
+            $pull: { inCartCourses: { $in: courseIds } },
+        });
+
+        req.session.message = "Khóa học đã được mua thành công";
+        return res.redirect("/course");
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+const removeCourseFromCart = async (req, res) => {
+    const userId = req.session.userLogin.userId;
+    const deleteCourseId = parseInt(req.params.id);
+
+    try {
+        const user = await User.findById(userId).select("inCartCourses");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const courseIndex = user.inCartCourses.indexOf(deleteCourseId);
+        if (courseIndex === -1) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        // remove from inCartCourses array
+        user.inCartCourses.splice(courseIndex, 1);
+        await user.save();
+
+        return res.redirect("/me/cart");
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
 
 module.exports = {
     getAllCourses,
@@ -88,4 +167,6 @@ module.exports = {
     getPurchasedCourses,
     addToCart,
     purchaseCourse,
+    purchaseMultipleCourses,
+    removeCourseFromCart,
 };
