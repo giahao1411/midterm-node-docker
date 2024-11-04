@@ -22,16 +22,28 @@
                             </a>
                             <p class="card-text"><%= course.description %></p>
                             <div class="row course-btn">
-                                <a
-                                    href="/me/cart/<%= course._id %>?_method=POST"
-                                    class="btn btn-primary"
-                                    >Thêm vào giỏ hàng</a
+                                <form
+                                    method="post"
+                                    action="/me/cart/<%= course._id %>"
                                 >
-                                <a
-                                    href="/me/purchased/<%= course._id %>?_method=POST"
-                                    class="btn btn-success"
-                                    >Mua khóa học</a
+                                    <button
+                                        class="btn btn-primary"
+                                        type="submit"
+                                    >
+                                        Thêm vào giỏ hàng
+                                    </button>
+                                </form>
+                                <form
+                                    method="post"
+                                    action="/me/cart/<%= course._id %>"
                                 >
+                                    <button
+                                        class="btn btn-success"
+                                        type="submit"
+                                    >
+                                        Mua khóa học
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

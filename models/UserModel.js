@@ -6,8 +6,8 @@ const UserSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["user", "admin"], default: "user" },
-    purchasedCourses: { type: Schema.Types.ObjectId, ref: "Course" },
-    inCartCourses: { type: Schema.Types.ObjectId, ref: "Course" },
+    purchasedCourses: [{ type: Number }],
+    inCartCourses: [{ type: Number }],
 });
 
 module.exports = mongoose.model("User", UserSchema);

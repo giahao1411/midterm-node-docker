@@ -126,6 +126,7 @@
 
     .course {
         height: 150px;
+        width: 380px;
     }
 
     .course>img {
@@ -133,8 +134,12 @@
         width: 200px;
     }
 
+    .course-description {
+        display: none;
+    }
+
+
     .course-name,
-    .course-description,
     .course-level {
         margin-bottom: 10px;
     }
@@ -154,5 +159,9 @@
 @media screen and (max-width: 1220px) {
     .container {
         max-width: 95%;
+    }
+
+    .course {
+        width: 785px;
     }
 }

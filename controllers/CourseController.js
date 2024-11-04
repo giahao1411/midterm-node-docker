@@ -6,6 +6,8 @@ const slugify = require("slugify");
 const renderCreatePage = (req, res) => {
     return res.render("layouts/main", {
         courses: [],
+        message: null,
+        errMessage: null,
         viewPath: "../courses/create",
     });
 };
@@ -18,6 +20,8 @@ const renderEditPage = async (req, res) => {
         if (selectedCourse) {
             return res.render("layouts/main", {
                 courses: [],
+                message: null,
+                errMessage: null,
                 selectedCourse,
                 viewPath: "../courses/edit",
             });
@@ -33,9 +37,15 @@ const renderEditPage = async (req, res) => {
 const getAllCourses = async (req, res) => {
     try {
         const courses = await Course.find({ deletedAt: null });
+        const message = req.session.message;
+        const errMessage = req.session.errMessage;
+        req.session.message = null;
+        req.session.errMessage = null;
 
         return res.render("layouts/main", {
             courses,
+            message,
+            errMessage,
             viewPath: "../home",
             userName: res.locals.userName, // Make sure userName is passed to the view
         });

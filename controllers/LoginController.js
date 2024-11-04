@@ -50,6 +50,7 @@ const loginCourse = async (req, res) => {
         );
 
         req.session.userLogin = {
+            userId: user.id,
             userName: user.name,
             role: user.role.toLowerCase(),
         };

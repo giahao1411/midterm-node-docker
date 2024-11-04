@@ -13,11 +13,11 @@ router.get("/", checkRole(["admin"]), MeController.getAllCourses);
 router.get("/trash", checkRole(["admin"]), MeController.getAllTrashCourses);
 
 // me get purchased courses
-router.get("/purchased");
-router.post("/purchased/:id");
+router.get("/purchased", MeController.getPurchasedCourses);
+router.post("/purchase/:id");
 
 // me add courses in cart
 router.get("/cart", MeController.getCart);
-router.post("/cart/:id");
+router.post("/cart/:id", MeController.addToCart);
 
 module.exports = router;

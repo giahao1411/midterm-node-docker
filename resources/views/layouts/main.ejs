@@ -30,7 +30,15 @@
             <header><%- include('../partials/header') %></header>
 
             <div class="content-container container">
-                <% if (!courses) { %>
+                <% if (message) { %>
+                <div id="alert-box" class="mt-5 alert alert-success">
+                    <%= message %>
+                </div>
+                <% } else if (errMessage) { %>
+                <div id="alert-box" class="mt-5 alert alert-danger">
+                    <%= errMessage %>
+                </div>
+                <% } %> <% if (!courses) { %>
                 <h2 class="text-center mt-5">
                     Không có khóa học nào ngay lúc này
                 </h2>
@@ -54,5 +62,6 @@
         ></script>
         <script src="/js/search.js"></script>
         <script src="/js/footer-display.js"></script>
+        <script src="/js/main.js"></script>
     </body>
 </html>
