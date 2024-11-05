@@ -25,8 +25,10 @@ exports.searchCourses = async (req, res) => {
             deletedAt: null,
         });
 
-        return res.render("courses/searchResults", { courses, layout: false });
+        return res.render("courses/searchResults", { courses, courseName: query });
     } catch (error) {
+        console.error("Error during course search:", error);
         return res.redirect("/course");
     }
 };
+
