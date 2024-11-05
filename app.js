@@ -54,9 +54,9 @@ app.use(cookieParser());
 app.use(setUser);
 
 // Use modules
+app.use("/", HomeRouter);
 app.use("/login", LoginRouter);
 app.use("/register", RegisterRouter);
-app.use("/", HomeRouter);
 app.use("/course", CourseRouter);
 app.use("/me", MeRouter);
 app.use("/search", SearchRouter);
