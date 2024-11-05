@@ -37,7 +37,7 @@ const getAllTrashCourses = async (req, res) => {
 
 const getCart = async (req, res) => {
     const userId = req.session.userLogin.userId;
-    
+
     try {
         const user = await User.findById(userId).select("inCartCourses");
 
@@ -124,7 +124,7 @@ const purchaseMultipleCourses = async (req, res) => {
     try {
         await User.findByIdAndUpdate(userId, {
             $addToSet: { purchasedCourses: { $each: courseIds } },
-            $pull: { inCartCourses: { $in: courseIds } },
+            $pull: { inCartCourses: { $in: courseIds } }, // remove from inCartCourses
         });
 
         req.session.message = "Khóa học đã được mua thành công";

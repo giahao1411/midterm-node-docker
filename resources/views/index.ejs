@@ -15,7 +15,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"
         ></script>
-        <title>Blog</title>
+        <title>Home page</title>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -42,6 +42,17 @@
                 color: white;
                 background-color: green;
             }
+
+            img {
+                width: 100%;
+                height: 320px;
+            }
+
+            #nextBtn {
+                display: flex;
+                margin: 30px auto;
+                padding: 10px 30px;
+            }
         </style>
     </head>
 
@@ -58,11 +69,11 @@
                             alt="Card image cap"
                         />
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
+                            <h5 class="card-title">Võ Nhật Hào</h5>
                             <p class="card-text">
-                                This is a longer card with supporting text below
-                                as a natural lead-in to additional content. This
-                                content is a little bit longer.
+                                Sinh viên chuyên ngành Kỹ thuật phần mềm tại
+                                trường Đại học Tôn Đức Thắng - Tốt nghiệp năm
+                                2026.
                             </p>
                         </div>
                     </div>
@@ -73,10 +84,10 @@
                             alt="Card image cap"
                         />
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
+                            <h5 class="card-title">Trần Gia Hào</h5>
                             <p class="card-text">
-                                This card has supporting text below as a natural
-                                lead-in to additional content.
+                                Sinh viên chuyên ngành kỹ thuật phần mềm đến từ
+                                trường Đại học Tôn Đức Thắng với niềm đam mê.
                             </p>
                         </div>
                     </div>
@@ -87,23 +98,37 @@
                             alt="Card image cap"
                         />
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
+                            <h5 class="card-title">Tống Nguyễn Gia Huy</h5>
                             <p class="card-text">
-                                This is a wider card with supporting text below
-                                as a natural lead-in to additional content. This
-                                card has even longer content than the first to
-                                show that equal height action.
+                                Sinh viên năm 3 chuyên ngành Kỹ thuật phần mềm
+                                đang theo học tại trường Đại học Tôn Đức Thắng.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <p class="mt-4 text-center">algorithm</p>
+            <div class="container mt-5" style="width: 500px">
+                <p class="mt-4 text-center">
+                    Dự án này phục vụ cho bài giữa kì - Học trực tuyến trên
+                    website, cho phép người dùng mua khóa học nhằm phục vụ nhu
+                    cầu học tập và làm việc.
+                </p>
             </div>
             <div class="container">
-                <button class="btn btn-primary">Next</button>
+                <button id="nextBtn" class="btn btn-primary">Tiếp theo</button>
             </div>
         </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const nextButton = document.getElementById("nextBtn");
+
+                if (nextButton) {
+                    nextButton.addEventListener("click", function () {
+                        window.location.href = "/login";
+                    });
+                }
+            });
+        </script>
     </body>
 </html>
