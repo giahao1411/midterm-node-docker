@@ -139,6 +139,8 @@ const showCourse = async (req, res) => {
         if (selectedCourse) {
             return res.render("layouts/main", {
                 courses: [],
+                message: null,
+                errMessage: null,
                 selectedCourse,
                 viewPath: "../courses/show",
             });

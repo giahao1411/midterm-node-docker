@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/css/mycourse.css" />
+
+<div class="container mt-4">
+    <h2 class="mb-5">Khoá học của tôi</h2>
+    <div id="courses" class="row">
+        <% courses.forEach(course => { %>
+        <div class="card-container col-12 mb-4">
+            <div class="card d-flex flex-row align-items-center">
+                <a href="/course/show/<%= course._id %>">
+                    <img
+                        src="<%= course.image %>"
+                        class="card-img-left"
+                        alt="<%= course.name %>"
+                    />
+                </a>
+                <div
+                    class="card-body d-flex flex-column justify-content-between"
+                >
+                    <a href="/course/show/<%= course._id %>">
+                        <h3 class="course-name"><%= course.name %></h3>
+                    </a>
+                    <h5 class="coruse-level mb-5"><%= course.level %></h5>
+
+                    <p class="course-description"><%= course.description %></p>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</div>

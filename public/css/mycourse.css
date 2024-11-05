@@ -1,0 +1,15 @@
+.card {
+    height: 200px;
+}
+
+img {
+    height: 100%;
+    width: 264px;
+    margin: 0 0 -1px 0px;
+    border-radius: 3px;
+}
+
+.card-container:hover {
+    border: none;
+    filter: brightness(0.95);
+}

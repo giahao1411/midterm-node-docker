@@ -59,6 +59,10 @@ html {
   /* Đẩy footer xuống cuối trang */
 }
 
+.hoverBox:hover {
+  border: none;
+}
+
 footer {
   /* display: none; */
   position: fixed;

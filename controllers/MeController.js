@@ -58,7 +58,29 @@ const getCart = async (req, res) => {
     }
 };
 
-const getPurchasedCourses = async (req, res) => {};
+const getPurchasedCourses = async (req, res) => {
+    const userId = req.session.userLogin.userId;
+    try {
+        const user = await User.findById(userId).select("purchasedCourses");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const courses = await Course.find({
+            _id: { $in: user.purchasedCourses },
+        });
+
+        return res.render("layouts/main", {
+            courses,
+            message: null,
+            errMessage: null,
+            viewPath: "../me/purchased-courses",
+        });
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
 
 const addToCart = async (req, res) => {
     const userId = req.session.userLogin.userId;
