@@ -1,5 +1,4 @@
 const validator = require("validator");
-const bcrypt = require("bcrypt");
 const UserModel = require("../models/UserModel");
 const hassPassword = require("../utils/hashPass");
 
