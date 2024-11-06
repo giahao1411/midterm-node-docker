@@ -24,7 +24,7 @@ exports.searchCourses = async (req, res) => {
             $or: searchConditions,
             deletedAt: null,
         });
-
+    
         return res.render("courses/searchResults", { courses, courseName: query });
     } catch (error) {
         console.error("Error during course search:", error);
