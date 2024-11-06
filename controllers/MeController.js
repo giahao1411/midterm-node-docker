@@ -67,8 +67,10 @@ const getPurchasedCourses = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
+        // Retrieve purchased courses that were not soft deleted
         const courses = await Course.find({
             _id: { $in: user.purchasedCourses },
+            deletedAt: null, // Only take courses that have not been soft deleted
         });
 
         return res.render("layouts/main", {
@@ -81,6 +83,7 @@ const getPurchasedCourses = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 };
+
 
 const addToCart = async (req, res) => {
     const userId = req.session.userLogin.userId;
