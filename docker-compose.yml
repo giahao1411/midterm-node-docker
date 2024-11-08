@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: midterm
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb
+    env_file:
+      - ./.env
+
+  mongodb:
+    image: mongo:latest
+    container_name: midterm-mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - midterm_data:/data/db
+
+volumes:
+  midterm_data:

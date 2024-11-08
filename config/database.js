@@ -7,6 +7,6 @@ async function connect() {
     } catch (err) {
         console.error("Database connect failed: + ", err);
     }
-}
+}   
 
 module.exports = { connect };
