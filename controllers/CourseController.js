@@ -110,7 +110,7 @@ const editCourse = async (req, res) => {
                 .json({ message: "Failed to update course information" });
         }
 
-        return res.redirect("/course");
+        return res.redirect("/me");
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
