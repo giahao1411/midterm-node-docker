@@ -36,7 +36,7 @@ const getAllTrashCourses = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
-    const userId = req.session.userLogin.userId;
+    const userId = req.user?.userId;
 
     try {
         const user = await User.findById(userId).select("inCartCourses");
@@ -59,7 +59,7 @@ const getCart = async (req, res) => {
 };
 
 const getPurchasedCourses = async (req, res) => {
-    const userId = req.session.userLogin.userId;
+    const userId = req.user?.userId;
     try {
         const user = await User.findById(userId).select("purchasedCourses");
 
@@ -84,9 +84,8 @@ const getPurchasedCourses = async (req, res) => {
     }
 };
 
-
 const addToCart = async (req, res) => {
-    const userId = req.session.userLogin.userId;
+    const userId = req.user?.userId;
     const courseId = parseInt(req.params.id);
 
     try {
@@ -115,7 +114,7 @@ const addToCart = async (req, res) => {
 };
 
 const purchaseCourse = async (req, res) => {
-    const userId = req.session.userLogin.userId;
+    const userId = req.user?.userId;
     const courseId = req.params.id;
 
     try {
@@ -143,7 +142,7 @@ const purchaseCourse = async (req, res) => {
 };
 
 const purchaseMultipleCourses = async (req, res) => {
-    const userId = req.session.userLogin.userId;
+    const userId = req.user?.userId;
     const courseIds = req.body.courseIds.map(Number); // convert ids to number type
 
     try {
@@ -160,7 +159,7 @@ const purchaseMultipleCourses = async (req, res) => {
 };
 
 const removeCourseFromCart = async (req, res) => {
-    const userId = req.session.userLogin.userId;
+    const userId = req.user?.userId;
     const deleteCourseId = parseInt(req.params.id);
 
     try {

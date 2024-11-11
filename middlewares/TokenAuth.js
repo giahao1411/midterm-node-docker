@@ -18,6 +18,7 @@ const requireAuth = (req, res, next) => {
 
         // Chuyển vai trò thành chữ thường và gán vào req.user
         req.user = {
+            userId: decoded.userId,
             userName: decoded.userName,
             role: decoded.role?.toLowerCase(),
         };

@@ -43,7 +43,11 @@ const loginCourse = async (req, res) => {
 
         // Tạo JWT chứa cả tên đăng nhập và vai trò
         const token = jwt.sign(
-            { userName: user.name, role: user.role.toLowerCase() }, // Chuyển vai trò thành chữ thường
+            {
+                userId: user.id,
+                userName: user.name,
+                role: user.role.toLowerCase(),
+            }, // Chuyển vai trò thành chữ thường
             process.env.JWT_SECRET,
             { expiresIn: "15m" }
         );
