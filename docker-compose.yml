@@ -1,56 +1,87 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  # mongodb container
-  mongodb:
-    image: mongo:latest
-    container_name: midterm-mongo
-    ports:
-      - 27017:27017
-    volumes:
-      - midterm_data:/data/db
+    # MongoDB container
+    mongodb:
+        image: mongo:latest
+        container_name: midterm-mongo
+        ports:
+            - "27017:27017"
+        volumes:
+            - midterm_data:/data/db
+        networks:
+            - midterm-network
 
-  # nginx reverse proxy container
-  nginx:
-    image: nginx:latest
-    container_name: midterm-nginx
-    ports:
-      - 80:80
-    depends_on:
-      - app1
-      - app2
-      - app3
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    # Redis container
+    redis:
+        image: redis:latest
+        container_name: midterm-redis
+        ports:
+            - "6379:6379"
+        networks:
+            - midterm-network
+        volumes:
+            - redis_data:/data
 
-  # server scaling containers
-  app1:
-    image: midterm-node-docker-app:latest
-    container_name: midterm-app1
-    ports:
-      - 3000:3000
-    depends_on:
-      - mongodb
-    env_file:
-      - ./.env
-  app2:
-    image: midterm-node-docker-app:latest
-    container_name: midterm-app2
-    ports:
-      - 3001:3000
-    depends_on:
-      - mongodb
-    env_file:
-      - ./.env
-  app3:
-    image: midterm-node-docker-app:latest
-    container_name: midterm-app3
-    ports:
-      - 3002:3000
-    depends_on:
-      - mongodb
-    env_file:
-      - ./.env
+    # Nginx reverse proxy container
+    nginx:
+        image: nginx:latest
+        container_name: midterm-nginx
+        ports:
+            - "80:80"
+        depends_on:
+            - app1
+            - app2
+            - app3
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf:ro
+        networks:
+            - midterm-network
+
+    # Application containers
+    app1:
+        image: midterm-node-docker-app:latest
+        container_name: midterm-app1
+        ports:
+            - "3000:3000"
+        depends_on:
+            - mongodb
+            - redis
+        env_file:
+            - ./.env
+        networks:
+            - midterm-network
+
+    app2:
+        image: midterm-node-docker-app:latest
+        container_name: midterm-app2
+        ports:
+            - "3001:3000"
+        depends_on:
+            - mongodb
+            - redis
+        env_file:
+            - ./.env
+        networks:
+            - midterm-network
+
+    app3:
+        image: midterm-node-docker-app:latest
+        container_name: midterm-app3
+        ports:
+            - "3002:3000"
+        depends_on:
+            - mongodb
+            - redis
+        env_file:
+            - ./.env
+        networks:
+            - midterm-network
+
+networks:
+    midterm-network:
+        driver: bridge
 
 volumes:
-  midterm_data:
+    midterm_data:
+    redis_data:
