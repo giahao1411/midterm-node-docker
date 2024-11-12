@@ -4,46 +4,52 @@ services:
     # MongoDB container
     mongodb:
         image: mongo:latest
-        container_name: midterm-mongo
         ports:
             - "27017:27017"
         volumes:
             - midterm_data:/data/db
         networks:
             - midterm-network
+        deploy:
+            placement:
+                constraints:
+                    - node.role == manager  # Chạy trên node manager để ổn định dữ liệu
 
     # Redis container
     redis:
         image: redis:latest
-        container_name: midterm-redis
         ports:
             - "6379:6379"
-        networks:
-            - midterm-network
         volumes:
             - redis_data:/data
+        networks:
+            - midterm-network
+        deploy:
+            placement:
+                constraints:
+                    - node.role == manager
 
     # Nginx reverse proxy container
     nginx:
         image: nginx:latest
-        container_name: midterm-nginx
         ports:
             - "80:80"
         depends_on:
-            - app1
-            - app2
-            - app3
+            - app
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf:ro
         networks:
             - midterm-network
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
 
-    # Application containers
-    app1:
+    # Application container (scaled up)
+    app:
         image: midterm-node-docker-app:latest
-        container_name: midterm-app1
-        ports:
-            - "3000:3000"
+        environment:
+            - NODE_ENV=production
         depends_on:
             - mongodb
             - redis
@@ -51,36 +57,17 @@ services:
             - ./.env
         networks:
             - midterm-network
-
-    app2:
-        image: midterm-node-docker-app:latest
-        container_name: midterm-app2
-        ports:
-            - "3001:3000"
-        depends_on:
-            - mongodb
-            - redis
-        env_file:
-            - ./.env
-        networks:
-            - midterm-network
-
-    app3:
-        image: midterm-node-docker-app:latest
-        container_name: midterm-app3
-        ports:
-            - "3002:3000"
-        depends_on:
-            - mongodb
-            - redis
-        env_file:
-            - ./.env
-        networks:
-            - midterm-network
+        deploy:
+            replicas: 3  # Scale service app lên 3 replicas
+            update_config:
+                parallelism: 1
+                delay: 10s
+            restart_policy:
+                condition: on-failure
 
 networks:
     midterm-network:
-        driver: bridge
+        driver: overlay
 
 volumes:
     midterm_data:
