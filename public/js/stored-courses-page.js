@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var courseItemCheckbox = $('input[name="courseIds[]"]');
     var checkAllSubmitBtn = $(".check-all-submit-btn");
 
+    $(document).on("click", "a[data-id]", function () {
+        courseId = $(this).data("id");
+    });
+
     // When delete course btn clicked
     btnDeleteCourse.onclick = function () {
         deleteForm.action = "/course/delete/" + courseId + "?_method=DELETE";
@@ -50,7 +54,6 @@ async function getCourseInformationById(id) {
 
         var deleteCourseName = document.getElementById("delete-course-name");
         courseId = data._id;
-        console.log(courseId);
         deleteCourseName.innerHTML = data.name;
     } catch (err) {
         console.error(err);
