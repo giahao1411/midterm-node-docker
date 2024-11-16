@@ -45,8 +45,8 @@ services:
 
     # Application container (scaled up)
     app:
-        build: .
-        # image: midterm-node-docker-app:latest
+        # build: .
+        image: midterm-node-docker-app:latest
         depends_on:
             - mongodb
             - redis
