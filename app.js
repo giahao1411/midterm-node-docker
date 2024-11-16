@@ -27,7 +27,7 @@ db.connect();
 const app = express();
 
 // Redis client
-const redisClient = require("./config/redisClient");
+const {redisClient} = require("./config/redisClient");
 
 // express-session with Redis store
 app.use(

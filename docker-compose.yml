@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
     # MongoDB container
     mongodb:
@@ -47,7 +45,8 @@ services:
 
     # Application container (scaled up)
     app:
-        image: midterm-node-docker-app:latest
+        build: .
+        # image: midterm-node-docker-app:latest
         depends_on:
             - mongodb
             - redis
@@ -56,7 +55,7 @@ services:
         networks:
             - midterm-network
         deploy:
-            replicas: 3 # Scale service app lên 3 replicas
+            replicas: 3
             update_config:
                 parallelism: 1
                 delay: 5s
