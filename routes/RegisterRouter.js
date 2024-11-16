@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const RegisterController = require("../controllers/RegisterController");
-const checkLogin = require("../middlewares/CheckLogin");
+const checkLogin = require("../middlewares/CheckLogin1");
 
 router.use(checkLogin);
 

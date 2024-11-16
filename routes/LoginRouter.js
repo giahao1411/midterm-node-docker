@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const LoginController = require("../controllers/LoginController");
-const checkLogin = require("../middlewares/CheckLogin");
+const checkLogin = require("../middlewares/CheckLogin1");
 
 // login route
 router.get("/", checkLogin, LoginController.renderLoginPage);
