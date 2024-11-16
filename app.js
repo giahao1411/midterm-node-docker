@@ -6,7 +6,6 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const RedisStore = require("connect-redis").default;
-const Redis = require("ioredis");
 
 // modules exported
 const CourseRouter = require("./routes/CourseRouter");
@@ -28,10 +27,7 @@ db.connect();
 const app = express();
 
 // Redis client
-const redisClient = new Redis({
-    host: process.env.REDIS_HOST || "redis", // or 'redis' if using Docker
-    port: process.env.REDIS_PORT || 6379,
-});
+const redisClient = require("./config/redisClient");
 
 // express-session with Redis store
 app.use(
@@ -70,7 +66,6 @@ app.use("/course", CourseRouter);
 app.use("/me", MeRouter);
 app.use("/search", SearchRouter);
 
-// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
