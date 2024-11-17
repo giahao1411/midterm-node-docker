@@ -3,6 +3,7 @@
 <div class="container">
     <h2 class="cart-title">Giỏ hàng của tôi</h2>
     <div class="cart">
+        <% if (courses.length > 0) { %>
         <div class="courses">
             <% courses.forEach(course => { %>
             <div class="course">
@@ -26,7 +27,18 @@
             </div>
             <% }) %>
         </div>
+        <% } else { %>
+        <div class="cart-empty">
+            <p>
+                Giỏ hàng của bạn hiện đang trống. Vui lòng thêm khóa học để tiếp
+                tục!
+            </p>
+            <a href="/course" class="btn btn-primary">Xem khóa học</a>
+        </div>
+        <% } %>
     </div>
+
+    <% if (courses.length > 0) { %>
     <div class="cart-total">
         <p>
             <span>Số lượng khóa học</span>
@@ -39,4 +51,5 @@
             <button type="submit" class="btn btn-success">Xác nhận mua</button>
         </form>
     </div>
+    <% } %>
 </div>
