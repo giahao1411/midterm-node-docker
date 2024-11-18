@@ -59,6 +59,9 @@ app.use(cookieParser());
 app.use(setUser);
 
 // Use modules
+// app.get("/", (req, res) => {
+//     res.send(`Container ID: ${process.env.HOSTNAME}\n`);
+// });
 app.use("/", HomeRouter);
 app.use("/login", LoginRouter);
 app.use("/register", RegisterRouter);
