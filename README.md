@@ -58,7 +58,7 @@ To deploy and running the application, run
 
 This command will build the ` docker-compose.yml ` file and running on Docker Swarm.
 
-It takes time to build if you haven't had the node, nginx, redis or mongodb images. Chilling and waiting for the result ~~!
+It takes time to build if you haven't had the node, nginx, redis or mongodb images. Chilling and waiting for the result~~!
 
 After built successfully, you can check the stack by ` docker stack ls ` which is list all the existed stacks on Docker Swarm. Remember that, this only on the manager node.
 
