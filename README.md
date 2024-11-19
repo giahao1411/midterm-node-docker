@@ -1,6 +1,6 @@
 # Midterm Dockerization
 
-Implemented with C# Window Form Application, ASP .NET Framework. Using Visual Studio 2022 for implementation.
+Implemented with NodeJS for back-end handling and MongoDB for database storing. Deploy and running by Docker.
 
 ## Description
 
