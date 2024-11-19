@@ -19,13 +19,13 @@ presented, illustrating the advantages and limitations of Docker in real-world a
 
 ## Usage
 
-To run the system, please clone the repository first. On the ` <> Code ` of this repository, select SSH for MacOS or HTTPS: 
-
-` https://github.com/giahao1411/midterm-node-docker.git `
+To run the system, please clone the repository first. On the ` <> Code ` of this repository, select SSH for MacOS or HTTPS:  ` https://github.com/giahao1411/midterm-node-docker.git `
 
 Next, move to the directory you want to place at. Open Command Prompt or Windows PowerShell and clone the project by
 
-` git clone https://github.com/giahao1411/midterm-node-docker.git `
+<pre>
+    <code id="code">git clone https://github.com/giahao1411/midterm-node-docker.git</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
 
 At this, you can see the whole project is cloned by the folder name ` midterm-node-docker `. Move into the folder by ` cd midterm-node-docker `
 
@@ -34,15 +34,29 @@ On the next step, we will talk about how to deploy and running the application o
 So on the ` docker-compose.yml ` file, you can see that we don't build on running the app image, we running by the pre-created image named "midterm-node-docker-app". 
 So we have to build the app image first.
 
-To build the image, we can follow by ` docker build -t midterm-node-docker-app .` -t means naming the image midterm-node-docker-app, "." means the current working directory of the Docker.
+To build the image, we can follow by
 
-We can check that if the image is created by ` docker images ` and find the image that you named before.
+<pre>
+    <code id="code">docker build -t midterm-node-docker-app .</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+
+-t means naming the image midterm-node-docker-app, "." means the current working directory of the Docker. We can check that if the image is created by ` docker images ` and find the image that you named before.
 
 If everything is fine by now, we move to the next step, which is deploying the application with Docker Swarm.
 
-` docker swarm init ` to initiate the swarm, and you can see the current node is play as a manager role of the Docker Swarm.
+<pre>
+    <code id="code">docker swarm init</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
 
-To deploy and running the application, run ` docker stack deploy -c docker-compose.yml midterm-app `. This command will build the ` docker-compose.yml ` file and running on Docker Swarm.
+to initiate the swarm, and you can see the current node is play as a manager role of the Docker Swarm.
+
+To deploy and running the application, run
+
+<pre>
+    <code id="code">docker stack deploy -c docker-compose.yml midterm-app</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+
+This command will build the ` docker-compose.yml ` file and running on Docker Swarm.
 
 It takes time to build if you haven't had the node, nginx, redis or mongodb images. Chilling and waiting for the result ~~!
 
@@ -65,4 +79,4 @@ This program was created by
 * [nhathao512](https://github.com/nhathao512)
 
 
-Thanks for visting our project! Wish you a good day and best sleeping experience from struggling deadline days by days.
+Thanks for visting our project! Wish you a good day and best sleeping experience from struggling deadline day by day.
