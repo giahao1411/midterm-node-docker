@@ -68,7 +68,7 @@ After all the services running properly, you can experience the application by o
 
 ## License
 
-This project is licensed under the 
+This project is licensed under the [GNU GPLv3 License](./LICENSE.md).
 
 ## Author
 
